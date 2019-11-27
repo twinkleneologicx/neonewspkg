@@ -1,0 +1,19 @@
+{
+    "name": "neologicx/neonewspkg",
+    "description": "This package consists news crud",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Twinkle Taneja",
+            "email": "twinkle.taneja@neologicx.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Neologicx\\Newspkg\\": "src/"
+        }
+    }
+}
