@@ -15,5 +15,12 @@
         "psr-4": {
             "Neologicx\\Newspkg\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Neologicx\\Newspkg\\NewsServiceProvider"
+            ]
+        }
     }
 }
