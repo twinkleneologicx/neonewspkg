@@ -103,7 +103,7 @@
                 <tr>
                     <th>S.no.</th>
                     <th>Category</th>
-                    <th>Image</th>
+                    <th>Image/Document</th>
                     <th>Heading</th>
                     <th>Description</th>
                     <th>Date</th>
@@ -118,8 +118,19 @@
                 <tr>
                     <td>{{$key+1}}</td>
                     <td>{{$item->newsCategory->name}}</td>
-                    <td><img class="zoomhover" src="{{\Storage::url($item->image)}}" alt=""
-                            style="min-width: 50px; max-width: 50px; min-height: 50px; max-height: 50px;"></td>
+                    @php
+                    $file=$item->image;
+                    $extension = pathinfo($file, PATHINFO_EXTENSION);
+                    @endphp
+                    <td>
+                        @if ($extension=='pdf')
+                            <a href="{{\Storage::url($item->image)}}" target="_blank">Document</a>
+                        @else
+                        <img class="zoomhover" src="{{\Storage::url($item->image)}}" alt=""
+                        style="min-width: 50px; max-width: 50px; min-height: 50px; max-height: 50px;">
+                        @endif
+                        
+                    </td>
                     <td>{{$item->heading}}</td>
                     <td>
                         <div class="more">{!! $item->description !!}</div>

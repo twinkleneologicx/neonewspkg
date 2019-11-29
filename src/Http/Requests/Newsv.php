@@ -25,7 +25,7 @@ class Newsv extends FormRequest
     {
         return [
             'ncat_id'=>'required',
-            'image'=>'required|mimes:jpeg,jpg,png,gif|max:2048',
+            'image'=>'required|mimes:jpeg,jpg,png,gif,pdf|max:2048',
             'heading'=>'required',
             'news_date'=>'required',
             'description'=>'required'

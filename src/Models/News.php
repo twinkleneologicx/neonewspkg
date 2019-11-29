@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
-    protected $fillable = ['id', 'ncat_id', 'image', 'heading', 'description', 'news_date', 'is_active'];
+    protected $fillable = ['id', 'ncat_id', 'image', 'heading', 'description', 'news_date', 'is_newsticker', 'is_active'];
 
     public function newsCategory(){
-        return $this->belongsTO('Neologicx\Newspkg\Models\NewsCategory','ncat_id','id');
+        return $this->belongsTo('Neologicx\Newspkg\Models\NewsCategory','ncat_id','id');
     }
 }

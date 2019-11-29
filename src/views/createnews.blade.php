@@ -29,19 +29,20 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="image">Image:</label>
+                        <label for="image">Image/Document:</label>
                         <input type="file" class="form-control" id="image" name="image" style="padding: 3px;">
                     </div>
                     <div class="alert alert-danger">Note* 
                             <ul>
                               <li>The size of image should be less than 2MB.</li>
                               <li>The ideal maximum dimensions of image are 365 x 274px.</li>
-                              <li>File type should be jpeg,jpg,png, and gif.</li>
+                              <li>File type should be jpeg,jpg,png,gif, and pdf.</li>
                             </ul>
                           </div>
                     <div class="form-group">
                         <label for="heading">Heading:</label>
                         <input type="text" class="form-control" id="heading" placeholder="Heading" name="heading">
+                        <input type="checkbox" name="is_newsticker" id="is_newsticker"> <span>Show this news in ticker</span>
                     </div>
                     <div class="form-group">
                         <label for="newwv">Date:</label>

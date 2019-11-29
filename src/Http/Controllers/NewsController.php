@@ -44,12 +44,16 @@ class NewsController extends Controller
      */
     public function store(Newsv $request)
     {
-        
+        if ($request->is_newsticker) {
+            $is_newsticker=1;
+        } else {
+            $is_newsticker=0;
+        }
          $image = $request->file('image');
          $img = $image->store('/public/newsimages');
          $datetime = $request->news_date;
         $news_date = date(' Y-m-d H:i', strtotime($datetime));
-        News::create(array_merge($request->except('_csrf'), ['image' => $img, 'news_date' => $news_date]));
+        News::create(array_merge($request->except('_csrf'), ['image' => $img, 'news_date' => $news_date, 'is_newsticker' => $is_newsticker]));
 
         return redirect('/newsCategory')->with('msg', 'News added successfully.');
     }
@@ -88,13 +92,18 @@ class NewsController extends Controller
     public function update(Request $request, $news)
     {
         $news = News::find($news);
+        if ($request->is_newsticker) {
+            $is_newsticker=1;
+        } else {
+            $is_newsticker=0;
+        }
         $datetime = $request->news_date;
         $news_date = date(' Y-m-d H:i', strtotime($datetime));
         if ($request->hasFile('image')) {
             $img = $request->file('image')->store('/public/newsimages');
-            $news->update(array_merge($request->except('_csrf', '_method'), ['image' => $img, 'news_date'=>$news_date]));
+            $news->update(array_merge($request->except('_csrf', '_method'), ['image' => $img, 'news_date'=>$news_date, 'is_newsticker' => $is_newsticker]));
         } else {
-            $news->update(array_merge($request->except('_csrf', '_method'), ['news_date'=>$news_date]));
+            $news->update(array_merge($request->except('_csrf', '_method'), ['news_date'=>$news_date, 'is_newsticker' => $is_newsticker]));
         }
         return redirect('/newsCategory')->with('msg', 'News updated successfully.');
     }

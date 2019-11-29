@@ -41,6 +41,7 @@
                     <div class="form-group">
                         <label for="heading">Heading:</label>
                     <input type="text" class="form-control" name="heading" id="heading" value="{{$news->heading}}">
+                    <input type="checkbox" name="is_newsticker" id="is_newsticker" @if($news->is_newsticker) checked @endif> <span>Show this news in ticker</span>
                     </div>
                     <div class="form-group">
                       <label for="newwv">Date:</label>
