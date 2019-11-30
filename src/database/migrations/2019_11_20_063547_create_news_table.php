@@ -21,6 +21,7 @@ class CreateNewsTable extends Migration
             $table->longText('description');
             $table->dateTime('news_date');
             $table->boolean('is_newsticker')->default(0);
+            $table->boolean('is_highlight')->default(0);
             $table->boolean('is_active')->default(1);
             $table->foreign('ncat_id') ->references('id')->on('news_categories') ->onDelete('cascade');
             $table->timestamps();

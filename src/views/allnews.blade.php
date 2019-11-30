@@ -109,6 +109,7 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>Active/Deactive</th>
+                    <th>Highlight</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -124,12 +125,12 @@
                     @endphp
                     <td>
                         @if ($extension=='pdf')
-                            <a href="{{\Storage::url($item->image)}}" target="_blank">Document</a>
+                        <a href="{{\Storage::url($item->image)}}" target="_blank">Document</a>
                         @else
                         <img class="zoomhover" src="{{\Storage::url($item->image)}}" alt=""
-                        style="min-width: 50px; max-width: 50px; min-height: 50px; max-height: 50px;">
+                            style="min-width: 50px; max-width: 50px; min-height: 50px; max-height: 50px;">
                         @endif
-                        
+
                     </td>
                     <td>{{$item->heading}}</td>
                     <td>
@@ -150,6 +151,8 @@
                             <span class="slider round"></span>
                         </label>
                     </td>
+                    <td><input type="radio" name="is_highlight" class="is_highlight" @if($item->is_highlight) checked
+                        @endif data-id="{{$item->id}}"></td>
                     <td> <a href="/news/{{$item->id}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
                         <a style="color:#007bff; cursor:pointer;" data-id="{{$item->id}}" class="delete"><i
                                 class="fa fa-trash" aria-hidden="true"></i></a> </td>
@@ -188,6 +191,37 @@
                 }
             });
           });
+        });
+    });
+</script>
+<script>
+    $(function(){
+        $('.is_highlight').each(function(){
+            $(this).click(function(){
+                var id = $(this).attr('data-id'); 
+            $.ajax({
+                type : 'GET',
+                url : '/newshighlight',
+                data : {'id' : id},
+                success : function(data){
+                   if(data){
+                    Swal.fire({
+                title: data,
+                type: "warning",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK",
+                customClass: {
+                    popup: 'statuspopup'
+                  }
+               }).then((result) => {
+                        if (result.value) {
+                            location.reload();
+                        }
+                        })
+              }
+            }
+            });
+            });            
         });
     });
 </script>

@@ -140,4 +140,17 @@ class NewsController extends Controller
         }
         
     }
+
+    public function changenewshighlight(){
+        $id = $_GET['id'];
+        $check = News::where('id', $id)->pluck('is_active');
+        if(!$check[0]){
+            return response()->json('News cannot be highlighted, because it is deactive at the moment.');
+        }
+        $currenthl = News::where('is_highlight', 1)->update(['is_highlight'=>0]);
+        $newhl = News::where('id', $id)->update(['is_highlight'=>1]);
+        if($newhl){
+            return response()->json('News highlighted successfully.');
+        }
+    }
 }

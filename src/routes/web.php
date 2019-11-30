@@ -13,4 +13,5 @@ Route::group(['namespace' => 'Neologicx\Newspkg\Http\Controllers'], function(){
     Route::get('/news/destroy/{news}','NewsController@destroy');
     Route::get('/allnews/{id}', 'NewsCategoryController@showallnews');
     Route::get('/newsstatus', 'NewsController@changenewsstatus');
+    Route::get('/newshighlight', 'NewsController@changenewshighlight');
 });

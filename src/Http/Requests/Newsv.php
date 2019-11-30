@@ -27,8 +27,7 @@ class Newsv extends FormRequest
             'ncat_id'=>'required',
             'image'=>'required|mimes:jpeg,jpg,png,gif,pdf|max:2048',
             'heading'=>'required',
-            'news_date'=>'required',
-            'description'=>'required'
+            'news_date'=>'required'
         ];
     }
 }
