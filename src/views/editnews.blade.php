@@ -1,6 +1,6 @@
 @extends('news::layout.app')
 @section('content')
-<link rel="stylesheet" href="{{URL::asset('css/bootstrap-datetimepicker.min.css')}}">
+<link rel="stylesheet" href="{{URL::asset('neonewspkg/css/bootstrap-datetimepicker.min.css')}}">
 <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
     {{-- {{dd($news)}} --}}
     <div class="row" style="overflow-x:hidden; margin:0; margin-top:3%;">
@@ -44,8 +44,12 @@
                     <input type="checkbox" name="is_newsticker" id="is_newsticker" @if($news->is_newsticker) checked @endif> <span>Show this news in ticker</span>
                     </div>
                     <div class="form-group">
-                      <label for="newwv">Date:</label>
+                      <label for="newwv">Start Date:</label>
                     <input type='text' class="form-control" id='news_date' name="news_date" value="{{$news->news_date}}" />
+                  </div>
+                  <div class="form-group">
+                      <label for="enddate">End Date:</label>
+                      <input type='text' class="form-control" id='end_date' name="end_date" value="{{$news->end_date}}" />
                   </div>
                     <div class="form-group">
                         <textarea name="description" id="description" class="form-control" cols="30" rows="5">{!! $news->description !!}</textarea>
@@ -81,13 +85,16 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-        <script src="{{URL::asset('js/datetimepicker.js')}}"></script>
+        <script src="{{URL::asset('neonewspkg/js/datetimepicker.js')}}"></script>
         <script type="text/javascript">
-            $(function () {
-               
-                $('#news_date').click(function(){ 
-                    $(this).datetimepicker().datetimepicker('show') ;
-                });
-             });
-        </script>
+          $(function () {
+              $('#news_date').click(function(){ 
+                  $(this).datetimepicker().datetimepicker('show') ;
+              });
+      
+              $('#end_date').click(function(){ 
+                  $(this).datetimepicker({ minDate: new Date()}).datetimepicker('show') ;
+              });                                 
+          });
+      </script>
 @endsection

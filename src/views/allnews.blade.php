@@ -79,6 +79,7 @@
         font-size: 12px;
     }
 </style>
+
 <div class="row" style="overflow-x:hidden; margin:0;">
     <div class="col-md-1"></div>
     <div class="col-md-11">
@@ -106,7 +107,8 @@
                     <th>Image/Document</th>
                     <th>Heading</th>
                     <th>Description</th>
-                    <th>Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                     <th>Time</th>
                     <th>Active/Deactive</th>
                     <th>Highlight</th>
@@ -143,6 +145,7 @@
                         @endif
                     </td>
                     <td>{{date('F d, Y', strtotime($item->news_date))}}</td>
+                    <td>{{date('F d, Y', strtotime($item->end_date))}}</td>
                     <td>{{date('h:i:sa', strtotime($item->news_date))}}</td>
                     <td>
                         <label class="switch">
@@ -186,7 +189,11 @@
                 customClass: {
                     popup: 'statuspopup'
                   }
-            })
+                }).then((result) => {
+                        if (result.value) {
+                            location.reload();
+                        }
+                        })
                    }
                 }
             });
@@ -217,7 +224,7 @@
                         if (result.value) {
                             location.reload();
                         }
-                        })
+                 })
               }
             }
             });

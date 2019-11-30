@@ -51,9 +51,11 @@ class NewsController extends Controller
         }
          $image = $request->file('image');
          $img = $image->store('/public/newsimages');
-         $datetime = $request->news_date;
-        $news_date = date(' Y-m-d H:i', strtotime($datetime));
-        News::create(array_merge($request->except('_csrf'), ['image' => $img, 'news_date' => $news_date, 'is_newsticker' => $is_newsticker]));
+         $startdate = $request->news_date;
+        $news_date = date(' Y-m-d H:i', strtotime($startdate));
+         $enddate = $request->end_date;
+        $end_date = date(' Y-m-d H:i', strtotime($enddate));
+        News::create(array_merge($request->except('_csrf'), ['image' => $img, 'news_date' => $news_date, 'end_date' => $end_date, 'is_newsticker' => $is_newsticker]));
 
         return redirect('/newsCategory')->with('msg', 'News added successfully.');
     }
@@ -97,13 +99,15 @@ class NewsController extends Controller
         } else {
             $is_newsticker=0;
         }
-        $datetime = $request->news_date;
-        $news_date = date(' Y-m-d H:i', strtotime($datetime));
+        $startdate = $request->news_date;
+        $news_date = date(' Y-m-d H:i', strtotime($startdate));
+         $enddate = $request->end_date;
+        $end_date = date(' Y-m-d H:i', strtotime($enddate));
         if ($request->hasFile('image')) {
             $img = $request->file('image')->store('/public/newsimages');
-            $news->update(array_merge($request->except('_csrf', '_method'), ['image' => $img, 'news_date'=>$news_date, 'is_newsticker' => $is_newsticker]));
+            $news->update(array_merge($request->except('_csrf', '_method'), ['image' => $img, 'news_date'=>$news_date, 'end_date' => $end_date, 'is_newsticker' => $is_newsticker]));
         } else {
-            $news->update(array_merge($request->except('_csrf', '_method'), ['news_date'=>$news_date, 'is_newsticker' => $is_newsticker]));
+            $news->update(array_merge($request->except('_csrf', '_method'), ['news_date'=>$news_date, 'end_date' => $end_date, 'is_newsticker' => $is_newsticker]));
         }
         return redirect('/newsCategory')->with('msg', 'News updated successfully.');
     }
@@ -123,6 +127,10 @@ class NewsController extends Controller
 
     public function changenewsstatus(){
         $id = $_GET['id'];
+        $check = News::where('id', $id)->pluck('is_highlight');
+        if($check[0]){
+            return response()->json('News cannot be deactivated, because it is highlighted at the moment.');
+        }
         $currentstatus = News::where('id', $id)->pluck('is_active');
         // dd($currentstatus[0]);
         if ($currentstatus[0]) {
@@ -145,7 +153,7 @@ class NewsController extends Controller
         $id = $_GET['id'];
         $check = News::where('id', $id)->pluck('is_active');
         if(!$check[0]){
-            return response()->json('News cannot be highlighted, because it is deactive at the moment.');
+            return response()->json('News cannot be highlighted, because it is deactivated at the moment.');
         }
         $currenthl = News::where('is_highlight', 1)->update(['is_highlight'=>0]);
         $newhl = News::where('id', $id)->update(['is_highlight'=>1]);

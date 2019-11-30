@@ -20,6 +20,7 @@ class CreateNewsTable extends Migration
             $table->string('heading');
             $table->longText('description');
             $table->dateTime('news_date');
+            $table->dateTime('end_date');
             $table->boolean('is_newsticker')->default(0);
             $table->boolean('is_highlight')->default(0);
             $table->boolean('is_active')->default(1);

@@ -46,15 +46,9 @@
     {{session()->get('msg')}}
   </div>
 @endif
-{{-- @if (count($errors) > 0)
-      <div class="alert alert-danger" id="error">
-        <ul>
-          @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-      @endif --}}
+{{-- {{dd($errors)}} --}}
+
+
   @yield('content')
   <script>
         $(function(){

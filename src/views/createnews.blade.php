@@ -1,8 +1,19 @@
 @extends('news::layout.app')
 @section('content')
-<link rel="stylesheet" href="{{URL::asset('css/bootstrap-datetimepicker.min.css')}}">
+<link rel="stylesheet" href="{{URL::asset('neonewspkg/css/bootstrap-datetimepicker.min.css')}}">
 <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 {{-- {{dd($data)}} --}}
+@if (isset($errors))
+@if (count($errors) > 0)
+<div class="" id="">
+  <ul>
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+</div>
+@endif  
+@endif
 <style>
         .catpopup{
           font-size: 12px;
@@ -15,8 +26,12 @@
         <div class="card" style="background-color: #45a3d6;">
             <div class="card-body" style="color:#fff;">
                 <h4 class="card-title">Add News</h4>
-                     @php date_default_timezone_set('Asia/Kolkata'); @endphp
+                     @php date_default_timezone_set('Asia/Kolkata');
+                        $date = strtotime("+7 day");
+                        $enddate = date('Y-m-d h:i A', $date);
+                     @endphp
                 <input type="hidden" value="{{date("Y-m-d h:i A")}}" id="today">
+                <input type="hidden" id="enddate" value="{{$enddate}}">
                 <form action="{{route('news.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
@@ -45,8 +60,12 @@
                         <input type="checkbox" name="is_newsticker" id="is_newsticker"> <span>Show this news in ticker</span>
                     </div>
                     <div class="form-group">
-                        <label for="newwv">Date:</label>
+                        <label for="startdate">Start Date:</label>
                         <input type='text' class="form-control" id='news_date' name="news_date" />
+                    </div>
+                    <div class="form-group">
+                        <label for="enddate">End Date:</label>
+                        <input type='text' class="form-control" id='end_date' name="end_date" />
                     </div>
                     <div class="form-group">
                         <label for="description">Description:</label>
@@ -84,7 +103,7 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-<script src="{{URL::asset('js/datetimepicker.js')}}"></script>
+<script src="{{URL::asset('neonewspkg/js/datetimepicker.js')}}"></script>
 <script type="text/javascript">
     $(function () {
         var todaydate = $('#today').val(); 
@@ -92,8 +111,13 @@
         $('#news_date').click(function(){ 
             $(this).datetimepicker().datetimepicker('show') ;
         });
-                                         
-                                      });
+
+        var enddate = $('#enddate').val(); 
+        $('#end_date').val(enddate);
+        $('#end_date').click(function(){ 
+            $(this).datetimepicker({ minDate: new Date()}).datetimepicker('show') ;
+        });                                 
+    });
 </script>
 <script>
     CKEDITOR.replace( 'description' );

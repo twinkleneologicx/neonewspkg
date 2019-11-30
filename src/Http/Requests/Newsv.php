@@ -23,11 +23,13 @@ class Newsv extends FormRequest
      */
     public function rules()
     {
+        // dd('hello');
         return [
             'ncat_id'=>'required',
             'image'=>'required|mimes:jpeg,jpg,png,gif,pdf|max:2048',
             'heading'=>'required',
-            'news_date'=>'required'
+            'news_date'=>'required',
+            'end_date'=>'required'
         ];
     }
 }
