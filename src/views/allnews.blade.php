@@ -116,6 +116,11 @@
                 </tr>
             </thead>
             <tbody style="text-align:center;">
+                
+                @php $today = date("Y-m-d") @endphp
+                {{-- @if ($enddate<=$today)
+                    {{dd('active')}}
+                @endif --}}
                 @foreach ($data as $key=>$item)
 
                 <tr>
@@ -148,8 +153,9 @@
                     <td>{{date('F d, Y', strtotime($item->end_date))}}</td>
                     <td>{{date('h:i:sa', strtotime($item->news_date))}}</td>
                     <td>
+                            @php $enddate = date('Y-m-d', strtotime($item->end_date)) @endphp
                         <label class="switch">
-                            <input type="checkbox" @if($item->is_active) checked @endif class="switchbtton"
+                            <input type="checkbox" @if($item->is_active && $enddate>=$today) checked @endif class="switchbtton"
                             data-id="{{$item->id}}">
                             <span class="slider round"></span>
                         </label>

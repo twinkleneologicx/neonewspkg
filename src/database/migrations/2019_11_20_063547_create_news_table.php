@@ -18,7 +18,7 @@ class CreateNewsTable extends Migration
             $table->unsignedbigInteger('ncat_id');
             $table->string('image');
             $table->string('heading');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->dateTime('news_date');
             $table->dateTime('end_date');
             $table->boolean('is_newsticker')->default(0);

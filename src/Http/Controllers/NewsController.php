@@ -131,6 +131,12 @@ class NewsController extends Controller
         if($check[0]){
             return response()->json('News cannot be deactivated, because it is highlighted at the moment.');
         }
+        $checkdate = News::where('id', $id)->pluck('end_date');
+        $enddate = date('Y-m-d', strtotime($checkdate[0]));
+        $today = date('Y-m-d');
+        if($today>$enddate){
+            return response()->json('News cannot be activated, because it is expired.');
+        }
         $currentstatus = News::where('id', $id)->pluck('is_active');
         // dd($currentstatus[0]);
         if ($currentstatus[0]) {
@@ -154,6 +160,12 @@ class NewsController extends Controller
         $check = News::where('id', $id)->pluck('is_active');
         if(!$check[0]){
             return response()->json('News cannot be highlighted, because it is deactivated at the moment.');
+        }
+        $checkdate = News::where('id', $id)->pluck('end_date');
+        $enddate = date('Y-m-d', strtotime($checkdate[0]));
+        $today = date('Y-m-d');
+        if($today>$enddate){
+            return response()->json('News cannot be highlighted, because it is expired.');
         }
         $currenthl = News::where('is_highlight', 1)->update(['is_highlight'=>0]);
         $newhl = News::where('id', $id)->update(['is_highlight'=>1]);
